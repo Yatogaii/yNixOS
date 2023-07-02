@@ -189,6 +189,7 @@
     xorg.xbacklight
     firefox
     git
+    git-credential-keepassxc
     python39
     python39Packages.pip
     go
