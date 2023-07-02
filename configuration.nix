@@ -12,7 +12,6 @@
       ./virtualization.nix 
       ./network.nix
       ./nur.nix
-      ./game.nix
       ./cachix.nix
     ];
 
@@ -139,7 +138,10 @@
   };
   home-manager.useGlobalPkgs = true;
 
-    environment.pathsToLink = [ "/share/zsh" "/libexec" ];
+  environment.pathsToLink = [ "/share/zsh" "/libexec" ];
+
+
+
 
   # overlays to enable v4l2 in mpv
   nixpkgs.overlays = with pkgs; [
@@ -148,9 +150,20 @@
         ffmpeg_5 = ffmpeg_5-full;
       };
     })
+
+    (self: super: {
+      qemu_full = super.qemu_full.overrideAttrs (oldAttrs: {
+        postPatch = oldAttrs.postPatch + ''
+          sed -i 's/GUI_REFRESH_INTERVAL_DEFAULT 30/GUI_REFRESH_INTERVAL_DEFAULT 16/g' include/ui/console.h
+        '';
+      });
+    })
   ];
   # overlays to enable 60fps in VM
   # QEMU 8.0: https://github.com/Yatogaii/qemu-60fps/archive/6cb20ea.tar.gz
+
+#  virtualisation.qemu.package = pkgs.qemu_full;
+
 
 
 
@@ -177,6 +190,7 @@
     firefox
     git
     python39
+    python39Packages.pip
     go
     clash
     zotero
@@ -242,6 +256,10 @@
     tlp
     # win10 vm remote display
     moonlight-qt
+    bilibili
+    
+    spotify
+    spotify-tray
   ];
 
 

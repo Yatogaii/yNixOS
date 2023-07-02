@@ -4,7 +4,7 @@
     enable = true;
     theme="Dracula";
     font = {
-      size = 14.5;
+      size = 13;
       name = "FiraCode Nerd Font";
     };
     extraConfig = "confirm_os_window_close 0\n";
